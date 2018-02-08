@@ -1,0 +1,10 @@
+version: '2'
+services:
+  discovery:
+    image: gt/eureka-service
+    ports:
+      - "8761:8761"
+  eureka-client:
+    image: gt/eureka-client
+  gateway-service:
+    image: gt/gateway-service

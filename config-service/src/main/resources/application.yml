@@ -14,8 +14,8 @@ spring:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: discovery
     prefer-ip-address: false
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://discovery:8761/eureka/
