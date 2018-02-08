@@ -13,6 +13,7 @@
 
     <modules>
         <module>eureka-service</module>
+        <module>eureka-client</module>
         <module>gateway-service</module>
         <module>config-service</module>
     </modules>
