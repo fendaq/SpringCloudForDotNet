@@ -6,26 +6,43 @@ services:
       - "8761:8761"
   eureka-client:
     image: gt/eureka-client
+    depends_on:
+      - discovery
+      - config-service
     ports:
       - "8762:8762"
   gateway-service:
     image: gt/gateway-service
+    depends_on:
+      - discovery
+      - config-service
     ports:
       - "8888:8888"
   simple-service:
-      image: gt/simple-service
-      ports:
-        - "8010:8010"
+    image: gt/simple-service
+    depends_on:
+      - discovery
+      - config-service
+    ports:
+      - "8010:8010"
   zipkin-service:
-      image: gt/zipkin-service
-      ports:
-        - "9012:9012"
+    image: gt/zipkin-service
+    depends_on:
+      - discovery
+      - config-service
+    ports:
+      - "9012:9012"
   config-service:
-        image: gt/config-service
-        ports:
-          - "8000:8000"
+    image: gt/config-service
+    depends_on:
+      - discovery
+    ports:
+      - "8000:8000"
   kpmservice:
     image: mskpm
+    depends_on:
+      - discovery
+      - config-service
     ports:
       - "8090:8090"
   
