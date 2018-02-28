@@ -12,6 +12,18 @@ services:
     image: gt/gateway-service
     ports:
       - "8888:8888"
+  simple-service:
+      image: gt/simple-service
+      ports:
+        - "8010:8010"
+  zipkin-service:
+      image: gt/zipkin-service
+      ports:
+        - "9012:9012"
+  config-service:
+        image: gt/config-service
+        ports:
+          - "8000:8000"
   kpmservice:
     image: mskpm
     ports:
