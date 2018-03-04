@@ -12,6 +12,7 @@
     <description>SpringCloud for DotNet</description>
 
     <modules>
+        <module>admin-service</module>
         <module>eureka-service</module>
         <module>eureka-client</module>
         <module>gateway-service</module>
