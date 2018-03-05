@@ -8,9 +8,11 @@ spring:
       config:
         server:
           git:
-            uri: ssh://git@gitlab.knoviagroup.cn:1022/root/SpringCloudForDotNet.git
+            uri: http://gitlab.knoviagroup.cn/root/SpringCloudForDotNet.git
             searchPaths: config-server-repo
             lable: master
+            username: root
+            password: t6y7@u8@
 
 eureka:
   instance:
