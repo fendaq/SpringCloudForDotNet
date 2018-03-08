@@ -19,6 +19,7 @@
         <module>config-service</module>
         <module>simple-service</module>
         <module>zipkin-service</module>
+        <module>sidecar-service</module>
     </modules>
 
 

@@ -8,7 +8,7 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 /**
  * @Author: gongtao
  * @Date: Created in 2018/2/6 14:36
- * @Description: Api 网关，使用端口5000
+ * @Description: Api 网关，使用端口8888
  *
  */
 
