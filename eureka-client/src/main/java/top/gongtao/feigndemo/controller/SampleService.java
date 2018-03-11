@@ -1,9 +1,7 @@
-package top.gongtao.controller;
+package top.gongtao.feigndemo.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by gongtao on 2018/3/11 12:36.

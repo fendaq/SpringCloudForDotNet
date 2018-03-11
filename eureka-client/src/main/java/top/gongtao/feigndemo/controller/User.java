@@ -1,4 +1,4 @@
-package top.gongtao.controller;
+package top.gongtao.feigndemo.controller;
 
 public class User {
   private Long id;

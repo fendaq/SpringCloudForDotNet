@@ -1,4 +1,4 @@
-package top.gongtao.controller;
+package top.gongtao.feigndemo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
