@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+//import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -62,7 +62,7 @@ public class EurekaClientApplicationTests {
 
     @Configuration
     @EnableAutoConfiguration
-    @EnableEurekaServer
+//    @EnableEurekaServer
     static class EurekaServer {
     }
 }

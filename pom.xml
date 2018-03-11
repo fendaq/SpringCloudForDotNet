@@ -20,6 +20,8 @@
         <module>simple-service</module>
         <module>zipkin-service</module>
         <module>sidecar-service</module>
+        <module>hystrix-dashboard-service</module>
+        <module>hystrix-turbine-service</module>
     </modules>
 
 
