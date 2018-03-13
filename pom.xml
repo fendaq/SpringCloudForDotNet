@@ -23,6 +23,7 @@
         <module>hystrix-dashboard-service</module>
         <module>hystrix-turbine-service</module>
         <module>feign-service</module>
+        <module>socket-service</module>
     </modules>
 
 
