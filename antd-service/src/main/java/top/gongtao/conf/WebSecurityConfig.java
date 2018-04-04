@@ -28,7 +28,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 对请求进行认证
                 .authorizeRequests()
                 // 所有 / 的所有请求 都放行
-                .antMatchers("/").permitAll()
+                .antMatchers("/").permitAll().antMatchers(HttpMethod.GET,"/demo").permitAll()
                 // 所有 /login 的POST请求 都放行
                 .antMatchers(HttpMethod.POST, "/api/login/account").permitAll()
                 // 添加权限检测

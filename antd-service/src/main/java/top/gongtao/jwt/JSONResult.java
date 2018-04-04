@@ -8,7 +8,7 @@ import org.json.JSONObject;
  * @Description:
  */
 public class JSONResult{
-    public static String fillResultString(String status, String message, Object result){
+    public static String fillResultString(Object status, String message, Object result){
         JSONObject jsonObject = new JSONObject(){{
             put("status", status);
             put("message", message);

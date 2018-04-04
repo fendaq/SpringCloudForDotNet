@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import top.gongtao.base.BaseServiceImpl;
+import top.gongtao.dao.SysAdminUserDao;
 import top.gongtao.entity.SysAdminUser;
 import top.gongtao.service.SysAdminUserService;
 import top.gongtao.util.FastJsonUtils;
@@ -27,6 +28,9 @@ import java.util.ArrayList;
 @Service
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
+    @Autowired
+    SysAdminUserService sysAdminUserService;
+
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -37,6 +41,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         SysAdminUser user = new SysAdminUser();
         user.setUsername(name);
         user.setPassword(password);
+
+       // SysAdminUser sysAdminUser = sysAdminUserService.selectOne(user);
 
 
 //        if(StringUtils.isBlank(user.getUsername())){
