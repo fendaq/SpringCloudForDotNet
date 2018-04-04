@@ -3,10 +3,14 @@ package top.gongtao.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.stereotype.Service;
+import top.gongtao.entity.SysAdminUser;
+import top.gongtao.service.SysAdminUserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +23,14 @@ import java.util.List;
  * @Date: Created in 2018/4/3 14:20
  * @Description: 负责JWT生成和验签
  */
+
+@Service
 public class TokenAuthenticationService {
+
+    @Autowired
+    private SysAdminUserService sysAdminUserService;
+
+
     static final long EXPIRATIONTIME = 432_000_000;     // 5天
     static final String SECRET = "P@ssw02d";            // JWT密码
     static final String TOKEN_PREFIX = "Bearer";        // Token前缀

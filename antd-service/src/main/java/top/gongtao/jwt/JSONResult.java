@@ -13,6 +13,7 @@ public class JSONResult{
             put("status", status);
             put("message", message);
             put("result", result);
+            put("currentAuthority", "admin");
         }};
 
         return jsonObject.toString();
