@@ -37,7 +37,8 @@ public class DemoController {
             add("jerry");
         }};
 
-        return JSONResult.fillResultString(200,"it's ok",users);
+        //return JSONResult.fillResultString(200,"it's ok",users);
+        return null;
     }
 
 }

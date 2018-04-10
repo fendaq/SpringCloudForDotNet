@@ -39,6 +39,16 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-data-jpa</artifactId>-->
+		<!--</dependency>-->
+
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-data-rest</artifactId>-->
+		<!--</dependency>-->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -49,6 +59,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- 添加 flowable 依赖 -->
+		<!--<dependency>-->
+			<!--<groupId>org.flowable</groupId>-->
+			<!--<artifactId>flowable-spring-boot-starter-rest-api</artifactId>-->
+			<!--<version>6.2.1</version>-->
+		<!--</dependency>-->
+
 
 
 
@@ -167,6 +185,10 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 
 
 	</dependencies>

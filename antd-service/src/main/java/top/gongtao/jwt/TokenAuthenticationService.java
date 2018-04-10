@@ -54,7 +54,7 @@ public class TokenAuthenticationService {
         try {
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getOutputStream().println(JSONResult.fillResultString("ok", "", JWT));
+            response.getOutputStream().println(JSONResult.fillResultString("ok", "","admin",JWT,"account"));
         } catch (IOException e) {
             e.printStackTrace();
         }

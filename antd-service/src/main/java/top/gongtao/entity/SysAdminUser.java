@@ -4,6 +4,8 @@ import top.gongtao.base.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * @Author: gongtao
@@ -61,6 +63,20 @@ public class SysAdminUser  extends BaseEntity {
     @Column(name = "`status`")
     private Byte status;
 
+
+    /**
+     * 用户角色
+     */
+    @Transient
+    private List<SysAdminRule> roles;
+
+    public List<SysAdminRule> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysAdminRule> roles) {
+        this.roles = roles;
+    }
 
     /**
      * 获取管理后台账号
