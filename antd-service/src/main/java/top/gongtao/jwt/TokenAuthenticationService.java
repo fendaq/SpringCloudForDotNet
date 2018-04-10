@@ -9,8 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
-import top.gongtao.entity.SysAdminUser;
-import top.gongtao.service.SysAdminUserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,9 +24,6 @@ import java.util.List;
 
 @Service
 public class TokenAuthenticationService {
-
-    @Autowired
-    private SysAdminUserService sysAdminUserService;
 
 
     static final long EXPIRATIONTIME = 432_000_000;     // 5天

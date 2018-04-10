@@ -2,11 +2,8 @@ package top.gongtao.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.gongtao.entity.SysAdminUser;
-import top.gongtao.jwt.JSONResult;
-import top.gongtao.service.SysAdminUserService;
+import top.gongtao.repository.UserRepository;
 
 import java.util.ArrayList;
 
@@ -20,15 +17,12 @@ import java.util.ArrayList;
 public class DemoController {
 
     @Autowired
-    SysAdminUserService sysAdminUserService;
+    private UserRepository ur;
 
     @GetMapping(value = "demo",produces="application/json;charset=UTF-8")
     public String demo(){
 
-        SysAdminUser user = new SysAdminUser();
-        user.setUsername("admin");
 
-        SysAdminUser sysAdminUser = sysAdminUserService.selectOne(user);
 
 
         ArrayList<String> users =  new ArrayList<String>(){{
@@ -37,7 +31,7 @@ public class DemoController {
             add("jerry");
         }};
 
-        //return JSONResult.fillResultString(200,"it's ok",users);
+        System.out.println(ur.findOne((long) 1).getRoles().toString());
         return null;
     }
 

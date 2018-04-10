@@ -1,21 +1,12 @@
 package top.gongtao.jwt;
 
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import top.gongtao.base.BaseServiceImpl;
-import top.gongtao.dao.SysAdminUserDao;
-import top.gongtao.entity.SysAdminUser;
-import top.gongtao.service.SysAdminUserService;
-import top.gongtao.util.FastJsonUtils;
 
 import java.util.ArrayList;
 
@@ -28,22 +19,11 @@ import java.util.ArrayList;
 @Service
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    @Autowired
-    SysAdminUserService sysAdminUserService;
-
-
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         // 获取认证的用户名 & 密码
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
-
-        SysAdminUser user = new SysAdminUser();
-        user.setUsername(name);
-        user.setPassword(password);
-
-       // SysAdminUser sysAdminUser = sysAdminUserService.selectOne(user);
-
 
 //        if(StringUtils.isBlank(user.getUsername())){
 //            throw new BadCredentialsException("账号不能为空~");
