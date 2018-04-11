@@ -31,7 +31,7 @@ public class DemoController {
             add("jerry");
         }};
 
-        //System.out.println(ur.findOne((long) 1).getRoles().toString());
+        System.out.println(ur.findOne((long) 1).getRoles().toString());
         return null;
     }
 

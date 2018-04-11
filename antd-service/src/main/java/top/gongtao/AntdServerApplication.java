@@ -6,8 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.core.io.support.PropertySourceFactory;
+import top.gongtao.entity.Department;
 import top.gongtao.entity.Role;
 import top.gongtao.entity.User;
+import top.gongtao.repository.DepartmentRepository;
 import top.gongtao.repository.RoleRepository;
 import top.gongtao.repository.UserRepository;
 
@@ -34,6 +36,9 @@ public class AntdServerApplication implements CommandLineRunner {
     @Autowired
     RoleRepository rr;
 
+    @Autowired
+    DepartmentRepository dr;
+
     public static void main(String[] args){
         SpringApplication.run(AntdServerApplication.class,args);
     }
@@ -41,21 +46,27 @@ public class AntdServerApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-//        User user1 = new User();
-//        user1.setPassword("sdf");
-//        user1.setRealname("sdfsd");
-//        user1.setUsername("gongtao");
-//
-//        Role role1 = new Role();
-//        role1.setName("超级管理员");
-//
-//        rr.save(role1);
-//
-//        Set roles = new HashSet<Role>();
-//
-//        roles.add(role1);
-//        user1.setRoles(roles);
-//        ur.save(user1);
+        User user1 = new User();
+        user1.setPassword("sdf");
+        user1.setRealname("sdfsd");
+        user1.setUsername("gongtao");
+
+        ur.save(user1);
+        Role role1 = new Role();
+        role1.setName("超级管理员");
+
+        rr.save(role1);
+
+
+
+        Set<Role> roles = new HashSet<Role>();
+        roles.add(role1);
+
+        Department department = new Department("司令部","司令部描述", (long) 10,true);
+dr.save(department);
+        user1.setRoles(roles);
+        user1.setDepartment(department);
+        ur.save(user1);
 
 
 

@@ -16,7 +16,7 @@ import java.util.Set;
  * @Description:
  */
 
-@Data
+//@Data
 @Entity(name = "kpm_role")
 //@JsonIgnoreProperties(value = { "users" })
 public class Role implements Serializable {
@@ -40,5 +40,27 @@ public class Role implements Serializable {
     @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<User>();
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 }

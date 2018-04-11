@@ -14,10 +14,10 @@ import java.util.Set;
  * @Date: Created in 2018/4/10 13:28
  * @Description:
  */
-
+//@Data
 @Entity(name = "kpm_user")
 //@JsonIgnoreProperties(value = { "roles" })
-public @Data class User implements Serializable {
+public class User implements Serializable {
 
     /**
      * 静态long类型常量serialVersionUID的作用：
@@ -71,8 +71,8 @@ public @Data class User implements Serializable {
      * 3.inverseJoinColumns 从表_id
      */
 //    @JsonIgnoreProperties(value = { "roles" })
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+//    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinTable(
             name = "kpm_user_role" ,
             joinColumns = {@JoinColumn(name="user_id")},
@@ -80,8 +80,71 @@ public @Data class User implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
 
+    @ManyToOne
+    private Department department;
 
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
 }
