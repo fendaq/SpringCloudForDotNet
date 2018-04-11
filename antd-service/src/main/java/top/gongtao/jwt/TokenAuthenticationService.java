@@ -9,12 +9,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import top.gongtao.entity.Role;
+import top.gongtao.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author: gongtao
@@ -23,8 +27,11 @@ import java.util.List;
  */
 
 @Service
+@Transactional
 public class TokenAuthenticationService {
 
+    @Autowired
+    UserRepository ur;
 
     static final long EXPIRATIONTIME = 432_000_000;     // 5天
     static final String SECRET = "P@ssw02d";            // JWT密码
@@ -32,11 +39,24 @@ public class TokenAuthenticationService {
     static final String HEADER_STRING = "Authorization";// 存放Token的Header Key
 
     // JWT 生成方法
-    static void addAuthentication(HttpServletResponse response, String username) {
+    public void addAuthentication(HttpServletResponse response, String username) {
+
+        StringBuilder sb = new StringBuilder();
+        Set<Role> roles = ur.findByUsername(username).getRoles();
+        if(roles != null){
+            for(Role r : roles){
+                sb.append(r.getName()+",");
+            }
+        }
+
+        String role = sb.toString().substring(0,sb.toString().length()-1);
+
         // 生成JWT
+
+
         String JWT = Jwts.builder()
                 // 保存权限（角色）
-                .claim("authorities", "ROLE_ADMIN,AUTH_WRITE")
+                .claim("authorities", role)
                 // 用户名写入标题
                 .setSubject(username)
                 // 有效期设置
@@ -49,7 +69,7 @@ public class TokenAuthenticationService {
         try {
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getOutputStream().println(JSONResult.fillResultString("ok", "","admin",JWT,"account"));
+            response.getOutputStream().println(JSONResult.fillResultString("ok", "",role,JWT,"account"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,7 +77,7 @@ public class TokenAuthenticationService {
 
 
     // JWT 验证方法
-    static Authentication getAuthentication(HttpServletRequest request) {
+    public Authentication getAuthentication(HttpServletRequest request) {
         // 从Header中拿到token
         String token = request.getHeader(HEADER_STRING);
 

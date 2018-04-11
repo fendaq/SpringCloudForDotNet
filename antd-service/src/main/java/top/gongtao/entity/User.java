@@ -1,5 +1,6 @@
 package top.gongtao.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -39,7 +40,7 @@ public class User implements Serializable {
     /**
      * 用户密码
      */
-    @JsonIgnore
+    @JSONField(serialize = false)
     private String password;
 
     /**
@@ -55,7 +56,7 @@ public class User implements Serializable {
     /**
      * 状态 1.启用 0.禁用
      */
-    private boolean status;
+    private Byte status;
 
 
     /**
@@ -72,7 +73,8 @@ public class User implements Serializable {
      */
 //    @JsonIgnoreProperties(value = { "roles" })
 //    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JSONField(serialize = false)
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinTable(
             name = "kpm_user_role" ,
             joinColumns = {@JoinColumn(name="user_id")},
@@ -80,6 +82,9 @@ public class User implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
 
+//    @JsonIgnore
+
+    @JSONField(serialize = false)
     @ManyToOne
     private Department department;
 
@@ -124,11 +129,11 @@ public class User implements Serializable {
         this.realname = realname;
     }
 
-    public boolean isStatus() {
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 
@@ -136,9 +141,17 @@ public class User implements Serializable {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void addRole(Role role){
+        roles.add(role);
+        role.getUsers().add(this);
     }
+
+    public void removeRole(Role role){
+        roles.remove(role);
+        role.getUsers().remove(this);
+    }
+
+
 
     public Department getDepartment() {
         return department;

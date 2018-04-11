@@ -53,18 +53,18 @@ public class AntdServerApplication implements CommandLineRunner {
 
         ur.save(user1);
         Role role1 = new Role();
-        role1.setName("超级管理员");
+        role1.setName("ROLE_ADMIN");
+        Role role2 = new Role();
+        role2.setName("ROLE_USER");
 
         rr.save(role1);
-
-
-
-        Set<Role> roles = new HashSet<Role>();
-        roles.add(role1);
-
+        rr.save(role2);
         Department department = new Department("司令部","司令部描述", (long) 10,true);
-dr.save(department);
-        user1.setRoles(roles);
+
+        dr.save(department);
+
+        user1.addRole(role1);
+        user1.addRole(role2);
         user1.setDepartment(department);
         ur.save(user1);
 

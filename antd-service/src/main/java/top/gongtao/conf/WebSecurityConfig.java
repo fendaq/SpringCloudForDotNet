@@ -1,5 +1,6 @@
 package top.gongtao.conf;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +11,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import top.gongtao.jwt.CustomAuthenticationProvider;
 import top.gongtao.jwt.JWTAuthenticationFilter;
 import top.gongtao.jwt.JWTLoginFilter;
+import top.gongtao.jwt.TokenAuthenticationService;
 
 /**
  * @Author: gongtao
@@ -20,6 +22,12 @@ import top.gongtao.jwt.JWTLoginFilter;
 @EnableWebSecurity
 
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private CustomAuthenticationProvider customAuthenticationProvider;
+
+    @Autowired
+    TokenAuthenticationService tokenAuthenticationService;
 
     // 设置 HTTP 验证规则
     @Override
@@ -40,7 +48,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 // 添加一个过滤器 所有访问 /api/login/account 的请求交给 JWTLoginFilter 来处理 这个类处理所有的JWT相关内容
-                .addFilterBefore(new JWTLoginFilter("/api/login/account", authenticationManager()),
+                .addFilterBefore(new JWTLoginFilter("/api/login/account", authenticationManager(),tokenAuthenticationService),
                         UsernamePasswordAuthenticationFilter.class)
                 // 添加一个过滤器验证其他请求的Token是否合法
                 .addFilterBefore(new JWTAuthenticationFilter(),
@@ -50,7 +58,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 使用自定义身份验证组件
-        auth.authenticationProvider(new CustomAuthenticationProvider());
+        auth.authenticationProvider(customAuthenticationProvider);
 
     }
 }

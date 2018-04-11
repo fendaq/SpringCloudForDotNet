@@ -2,12 +2,14 @@ package top.gongtao.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,11 +27,17 @@ import java.io.IOException;
  *  命令测试
  *
  */
+
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    public JWTLoginFilter(String url, AuthenticationManager authManager) {
+
+    private TokenAuthenticationService tokenAuthenticationService;
+
+
+    public JWTLoginFilter(String url, AuthenticationManager authManager,TokenAuthenticationService tokenAuthenticationService) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
+        this.tokenAuthenticationService = tokenAuthenticationService;
     }
 
     // 登陆时需要验证时调用
@@ -56,7 +64,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             HttpServletRequest req,
             HttpServletResponse res, FilterChain chain,
             Authentication auth) throws IOException, ServletException {
-        TokenAuthenticationService.addAuthentication(res, auth.getName());
+        tokenAuthenticationService.addAuthentication(res, auth.getName());
     }
 
 

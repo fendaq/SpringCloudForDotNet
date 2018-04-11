@@ -37,7 +37,7 @@ public class Role implements Serializable {
 
 //    @JsonIgnoreProperties(value = { "users" })
     @JsonIgnore
-    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<User>();
 
     public Long getId() {

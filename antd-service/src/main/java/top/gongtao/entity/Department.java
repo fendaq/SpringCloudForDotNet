@@ -1,5 +1,7 @@
 package top.gongtao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -24,6 +26,7 @@ public class Department implements Serializable {
 
     private String description;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "department",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<User> users = new HashSet<User>();
 
