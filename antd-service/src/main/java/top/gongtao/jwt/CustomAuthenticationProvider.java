@@ -6,7 +6,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import top.gongtao.entity.User;
+import top.gongtao.repository.UserRepository;
 
 import java.util.ArrayList;
 
@@ -16,14 +19,21 @@ import java.util.ArrayList;
  * @Description: 自定义验证组件，提供密码验证功能
  */
 
-@Service
+@Repository
 public class CustomAuthenticationProvider implements AuthenticationProvider {
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         // 获取认证的用户名 & 密码
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
+
+        User user = userRepository.findByUsername(name);
+
+
 
 //        if(StringUtils.isBlank(user.getUsername())){
 //            throw new BadCredentialsException("账号不能为空~");

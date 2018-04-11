@@ -22,7 +22,9 @@ import java.util.Set;
  * @Description:
  */
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {
+        org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration.class,
+        org.flowable.spring.boot.SecurityAutoConfiguration.class})
 @EnableDiscoveryClient
 public class AntdServerApplication implements CommandLineRunner {
 
@@ -39,21 +41,21 @@ public class AntdServerApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        User user1 = new User();
-        user1.setPassword("sdf");
-        user1.setRealname("sdfsd");
-        user1.setUsername("gongtao");
-
-        Role role1 = new Role();
-        role1.setName("超级管理员");
-
-        rr.save(role1);
-
-        Set roles = new HashSet<Role>();
-
-        roles.add(role1);
-        user1.setRoles(roles);
-        ur.save(user1);
+//        User user1 = new User();
+//        user1.setPassword("sdf");
+//        user1.setRealname("sdfsd");
+//        user1.setUsername("gongtao");
+//
+//        Role role1 = new Role();
+//        role1.setName("超级管理员");
+//
+//        rr.save(role1);
+//
+//        Set roles = new HashSet<Role>();
+//
+//        roles.add(role1);
+//        user1.setRoles(roles);
+//        ur.save(user1);
 
 
 

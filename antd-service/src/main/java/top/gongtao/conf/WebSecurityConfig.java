@@ -18,6 +18,7 @@ import top.gongtao.jwt.JWTLoginFilter;
  */
 @Configuration
 @EnableWebSecurity
+
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // 设置 HTTP 验证规则
