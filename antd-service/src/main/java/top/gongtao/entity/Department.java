@@ -13,7 +13,7 @@ import java.util.Set;
  * @Description:
  */
 
-@Entity(name="kpm_department")
+//@Entity(name="kpm_department")
 public class Department implements Serializable {
 
     private static final long serialVersionUID = 1L;

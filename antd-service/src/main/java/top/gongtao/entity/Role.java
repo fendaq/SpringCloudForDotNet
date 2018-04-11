@@ -17,7 +17,7 @@ import java.util.Set;
  */
 
 //@Data
-@Entity(name = "kpm_role")
+//@Entity(name = "kpm_role")
 //@JsonIgnoreProperties(value = { "users" })
 public class Role implements Serializable {
 

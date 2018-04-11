@@ -10,8 +10,8 @@ import top.gongtao.entity.User;
  * @Date: Created in 2018/4/10 13:44
  * @Description:
  */
-@RepositoryRestResource(collectionResourceRel = "user" , path = "user")
-public interface UserRepository extends PagingAndSortingRepository<User, Long> {
+//@RepositoryRestResource(collectionResourceRel = "user" , path = "user")
+public interface UserRepository  {
 
     User findByUsername(String username);
 

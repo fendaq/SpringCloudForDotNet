@@ -1,17 +1,25 @@
 package top.gongtao.conf;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import top.gongtao.jwt.CustomAuthenticationProvider;
-import top.gongtao.jwt.JWTAuthenticationFilter;
-import top.gongtao.jwt.JWTLoginFilter;
-import top.gongtao.jwt.TokenAuthenticationService;
+import top.gongtao.security.JwtAuthenticationEntryPoint;
+import top.gongtao.security.JwtAuthorizationTokenFilter;
+import top.gongtao.security.JwtTokenUtil;
+import top.gongtao.security.service.JwtUserDetailsService;
 
 /**
  * @Author: gongtao
@@ -20,45 +28,99 @@ import top.gongtao.jwt.TokenAuthenticationService;
  */
 @Configuration
 @EnableWebSecurity
-
-class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private CustomAuthenticationProvider customAuthenticationProvider;
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    TokenAuthenticationService tokenAuthenticationService;
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
 
-    // 设置 HTTP 验证规则
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private JwtUserDetailsService jwtUserDetailsService;
+
+    @Value("${jwt.header}")
+    private String tokenHeader;
+
+    @Value("${jwt.route.authentication.path}")
+    private String authenticationPath;
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(jwtUserDetailsService)
+                .passwordEncoder(passwordEncoderBean());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoderBean() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // 关闭csrf验证
-        http.csrf().disable()
-                // 对请求进行认证
-                .authorizeRequests()
-                // 所有 / 的所有请求 都放行
-                .antMatchers("/").permitAll().antMatchers(HttpMethod.GET,"/demo").permitAll()
-                // 所有 /login 的POST请求 都放行
-                .antMatchers(HttpMethod.POST, "/api/login/account").permitAll()
-                // 添加权限检测
-                .antMatchers("/hello").hasAuthority("AUTH_WRITE")
-                // 角色检测
-                .antMatchers("/world").hasRole("ADMIN")
-                // 所有请求需要身份认证
-                .anyRequest().authenticated()
-                .and()
-                // 添加一个过滤器 所有访问 /api/login/account 的请求交给 JWTLoginFilter 来处理 这个类处理所有的JWT相关内容
-                .addFilterBefore(new JWTLoginFilter("/api/login/account", authenticationManager(),tokenAuthenticationService),
-                        UsernamePasswordAuthenticationFilter.class)
-                // 添加一个过滤器验证其他请求的Token是否合法
-                .addFilterBefore(new JWTAuthenticationFilter(),
-                        UsernamePasswordAuthenticationFilter.class);
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 使用自定义身份验证组件
-        auth.authenticationProvider(customAuthenticationProvider);
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                // we don't need CSRF because our token is invulnerable
+                .csrf().disable()
 
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+
+                // don't create session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+
+                .authorizeRequests()
+
+                // Un-secure H2 Database
+                .antMatchers("/h2-console/**/**").permitAll()
+
+                .antMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated();
+
+        // Custom JWT based security filter
+        JwtAuthorizationTokenFilter authenticationTokenFilter = new JwtAuthorizationTokenFilter(userDetailsService(), jwtTokenUtil, tokenHeader);
+        httpSecurity
+                .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+        // disable page caching
+        httpSecurity
+                .headers()
+                .frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
+                .cacheControl();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        // AuthenticationTokenFilter will ignore the below paths
+        web
+                .ignoring()
+                .antMatchers(
+                        HttpMethod.POST,
+                        authenticationPath
+                )
+
+                // allow anonymous resource requests
+                .and()
+                .ignoring()
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/",
+                        "/*.html",
+                        "/favicon.ico",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js"
+                )
+
+                // Un-secure H2 Database (for testing purposes, H2 console shouldn't be unprotected in production)
+                .and()
+                .ignoring()
+                .antMatchers("/h2-console/**/**");
     }
 }

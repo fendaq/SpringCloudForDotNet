@@ -26,8 +26,8 @@ import java.util.Set;
  * @Description: 负责JWT生成和验签
  */
 
-@Service
-@Transactional
+//@Service
+//@Transactional
 public class TokenAuthenticationService {
 
     @Autowired

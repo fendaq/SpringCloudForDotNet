@@ -29,8 +29,8 @@ import java.util.Set;
 @Api(value = "UserController", description="用户接口")
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
+//    @Autowired
+//    private UserRepository userRepository;
 
     @ApiOperation(value = "获取当前登陆用户", notes = "获取当前登陆用户")
     @GetMapping(value = "/currentUser", produces = {"application/json;charset=UTF-8"})
@@ -63,10 +63,10 @@ public class UserController {
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
         String userName = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 
-        User user = userRepository.findByUsername(userName);
-
-        return FastJsonUtils.resultSuccess(200, "登录成功", user);
-
+//        User user = userRepository.findByUsername(userName);
+//
+//        return FastJsonUtils.resultSuccess(200, "登录成功", user);
+return null;
     }
 
 

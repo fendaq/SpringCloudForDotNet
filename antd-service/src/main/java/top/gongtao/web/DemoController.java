@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @Description: 仅供调试使用
  */
 
-@RestController
+//@RestController
 public class DemoController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class DemoController {
             add("jerry");
         }};
 
-        System.out.println(ur.findOne((long) 1).getRoles().toString());
+        //System.out.println(ur.findOne((long) 1).getRoles().toString());
         return null;
     }
 

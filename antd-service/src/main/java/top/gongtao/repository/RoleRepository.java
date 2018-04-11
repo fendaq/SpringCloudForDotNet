@@ -10,6 +10,6 @@ import top.gongtao.entity.Role;
  * @Description:
  */
 
-@RepositoryRestResource(collectionResourceRel = "role" , path = "role")
-public interface RoleRepository  extends PagingAndSortingRepository<Role, Long> {
+//@RepositoryRestResource(collectionResourceRel = "role" , path = "role")
+public interface RoleRepository {
 }

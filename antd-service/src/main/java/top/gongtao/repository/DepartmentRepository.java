@@ -10,6 +10,6 @@ import top.gongtao.entity.Department;
  * @Description:
  */
 
-@RepositoryRestResource(collectionResourceRel = "dept" , path = "dept")
-public interface DepartmentRepository extends PagingAndSortingRepository<Department, Long> {
+//@RepositoryRestResource(collectionResourceRel = "dept" , path = "dept")
+public interface DepartmentRepository  {
 }

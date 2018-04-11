@@ -24,8 +24,8 @@ import java.util.ArrayList;
  * @Description: 自定义验证组件，提供密码验证功能
  */
 
-@Repository
-@Transactional
+//@Repository
+//@Transactional
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
