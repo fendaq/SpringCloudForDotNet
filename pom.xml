@@ -25,6 +25,7 @@
         <module>feign-service</module>
         <module>socket-service</module>
         <module>antd-service</module>
+        <module>flowable-service</module>
     </modules>
 
 
