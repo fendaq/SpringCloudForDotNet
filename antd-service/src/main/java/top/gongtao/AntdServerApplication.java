@@ -12,9 +12,13 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @Description:
  */
 
-@SpringBootApplication(exclude = {
-        org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration.class,
-        org.flowable.spring.boot.SecurityAutoConfiguration.class})
+//@SpringBootApplication(exclude = {
+//        org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration.class,
+//        org.flowable.spring.boot.SecurityAutoConfiguration.class})
+
+
+
+@SpringBootApplication
 @EnableDiscoveryClient
 public class AntdServerApplication implements CommandLineRunner {
 

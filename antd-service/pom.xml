@@ -8,11 +8,17 @@
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
+	<!--<parent>-->
+		<!--<groupId>org.springframework.boot</groupId>-->
+		<!--<artifactId>spring-boot-starter-parent</artifactId>-->
+		<!--<version>1.5.10.RELEASE</version>-->
+		<!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+	<!--</parent>-->
+
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.10.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>knovia</groupId>
+		<artifactId>SpringCloudForDotNet</artifactId>
+		<version>1.0.0</version>
 	</parent>
 
 	<properties>
