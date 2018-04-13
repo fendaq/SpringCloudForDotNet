@@ -12,6 +12,9 @@ public class  JwtAuthenticationRequest implements Serializable {
     private String username;
     private String password;
 
+    // 登录类型
+    private String type;
+
     public JwtAuthenticationRequest() {
         super();
     }
@@ -35,5 +38,13 @@ public class  JwtAuthenticationRequest implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

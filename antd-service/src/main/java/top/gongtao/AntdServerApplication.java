@@ -5,18 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.core.io.support.PropertySourceFactory;
-import top.gongtao.entity.Department;
-import top.gongtao.entity.Role;
-import top.gongtao.entity.User;
-import top.gongtao.repository.DepartmentRepository;
-import top.gongtao.repository.RoleRepository;
-import top.gongtao.repository.UserRepository;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @Author: gongtao

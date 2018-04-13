@@ -2,8 +2,6 @@ package top.gongtao.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import top.gongtao.repository.UserRepository;
 
 import java.util.ArrayList;
 
@@ -16,8 +14,6 @@ import java.util.ArrayList;
 //@RestController
 public class DemoController {
 
-    @Autowired
-    private UserRepository ur;
 
     @GetMapping(value = "demo",produces="application/json;charset=UTF-8")
     public String demo(){

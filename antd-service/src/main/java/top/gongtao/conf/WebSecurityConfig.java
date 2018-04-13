@@ -97,13 +97,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        // AuthenticationTokenFilter will ignore the below paths
+        // AuthenticationTokenFilter 将会忽略以下path
         web
                 .ignoring()
                 .antMatchers(
                         HttpMethod.POST,
                         authenticationPath
-                )
+                )   // 忽略登录请求
 
                 // allow anonymous resource requests
                 .and()

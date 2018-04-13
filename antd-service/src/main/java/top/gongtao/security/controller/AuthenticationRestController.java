@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import top.gongtao.security.JwtUser;
 import top.gongtao.security.service.JwtAuthenticationResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -45,8 +47,22 @@ public class AuthenticationRestController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
 
+        // 获取用户角色
+        StringBuilder sb = new StringBuilder();
+        boolean flag = false;
+        List<GrantedAuthority> authList = (List<GrantedAuthority>) userDetails.getAuthorities();
+        for(GrantedAuthority ga : authList){
+            if (flag) {
+                sb.append(",");
+            }else {
+                flag=true;
+            }
+            sb.append(ga.getAuthority());
+        }
+
+
         // Return the token
-        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(token,"ok",authenticationRequest.getType(),sb.toString()));
     }
 
     @RequestMapping(value = "${jwt.route.authentication.refresh}", method = RequestMethod.GET)

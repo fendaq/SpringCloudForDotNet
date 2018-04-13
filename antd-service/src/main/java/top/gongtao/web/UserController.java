@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import top.gongtao.entity.Role;
 import top.gongtao.entity.User;
@@ -15,6 +17,7 @@ import top.gongtao.repository.UserRepository;
 import top.gongtao.util.FastJsonUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -104,17 +107,20 @@ return null;
     @GetMapping(value = "/getRole", produces = {"application/json;charset=UTF-8"})
     public String getRole(){
 
-        List<GrantedAuthority> r = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-
-        StringBuilder sb=new StringBuilder();
-        if(r != null){
-            for(GrantedAuthority g : r){
-                sb.append(g.getAuthority()+",");
+        // 获取用户角色
+        StringBuilder sb = new StringBuilder();
+        boolean flag = false;
+        List<GrantedAuthority> authList = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        for(GrantedAuthority ga : authList){
+            if (flag) {
+                sb.append(",");
+            }else {
+                flag=true;
             }
+            sb.append(ga.getAuthority());
         }
-
         JSONObject jsonObject = new JSONObject(){{
-            put("role", sb.toString().substring(0,sb.toString().length()-1));
+            put("role", sb.toString());
         }};
         return jsonObject.toString();
     }

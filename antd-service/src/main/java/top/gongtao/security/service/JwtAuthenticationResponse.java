@@ -11,11 +11,50 @@ public class JwtAuthenticationResponse implements Serializable {
 
     private final String token;
 
+    private String status;
+
+    private String type;
+
+    private String currentAuthority;
+
+
+
+    public JwtAuthenticationResponse(String token, String status, String type,String currentAuthority) {
+        this.token = token;
+        this.status = status;
+        this.type = type;
+        this.currentAuthority = currentAuthority;
+    }
+
     public JwtAuthenticationResponse(String token) {
         this.token = token;
     }
 
     public String getToken() {
         return this.token;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCurrentAuthority() {
+        return currentAuthority;
+    }
+
+    public void setCurrentAuthority(String currentAuthority) {
+        this.currentAuthority = currentAuthority;
     }
 }
