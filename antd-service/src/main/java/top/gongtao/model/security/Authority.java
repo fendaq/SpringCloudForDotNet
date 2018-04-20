@@ -10,14 +10,22 @@ public class Authority {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authority_seq")
-    @SequenceGenerator(name = "authority_seq", sequenceName = "authority_seq", allocationSize = 1)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authority_seq")
+//    @SequenceGenerator(name = "authority_seq", sequenceName = "authority_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+//    @Column(name = "NAME", length = 50)
+//    @NotNull
+//    @Enumerated(EnumType.STRING)
+//    private AuthorityName name;
 
     @Column(name = "NAME", length = 50)
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private AuthorityName name;
+    private String name;
+
+    @Column(name = "DESCRIPTION",length = 150)
+    private String description;
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private List<User> users;
@@ -30,12 +38,20 @@ public class Authority {
         this.id = id;
     }
 
-    public AuthorityName getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(AuthorityName name) {
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<User> getUsers() {

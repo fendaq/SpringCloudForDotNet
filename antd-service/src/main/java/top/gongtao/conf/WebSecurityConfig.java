@@ -81,6 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**/**").permitAll()
 
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/api/getSystemRole").permitAll()
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter
@@ -111,6 +112,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         HttpMethod.GET,
                         "/",
+                        "/api/getSystemRole",
                         "/*.html",
                         "/favicon.ico",
                         "/**/*.html",

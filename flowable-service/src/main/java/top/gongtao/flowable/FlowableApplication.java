@@ -22,10 +22,16 @@ public class FlowableApplication {
 
 	@Bean
 	public DataSource database() {
+//		return DataSourceBuilder.create()
+//				.url("jdbc:mysql://localhost/flowablesbrest?characterEncoding=UTF-8")
+//				.username("root")
+//				.password("1111")
+//				.driverClassName("com.mysql.jdbc.Driver")
+//				.build();
 		return DataSourceBuilder.create()
-				.url("jdbc:mysql://localhost/flowablesbrest?characterEncoding=UTF-8")
+				.url("jdbc:mysql://192.168.16.101:3306/flowablerest?characterEncoding=UTF-8")
 				.username("root")
-				.password("1111")
+				.password("t6y7@u8")
 				.driverClassName("com.mysql.jdbc.Driver")
 				.build();
 	}

@@ -3,6 +3,8 @@ package top.gongtao.web;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +23,9 @@ import java.util.List;
 @RequestMapping("/api")
 @Api(value = "UserController", description="用户接口")
 public class UserController {
+
+    @Autowired
+    private Environment env;
 
 //    @Autowired
 //    private UserRepository userRepository;
@@ -115,6 +120,17 @@ return null;
         return jsonObject.toString();
     }
 
+
+    @ApiOperation(value = "获取系统角色", notes = "获取系统角色")
+    @GetMapping(value = "/getSystemRole", produces = {"application/json;charset=UTF-8"})
+    public String getSystemRole(){
+
+
+        JSONObject jsonObject = new JSONObject(){{
+            put("role", env.getProperty("antd.roles","ROLE_ADMIN"));
+        }};
+        return jsonObject.toString();
+    }
 
 
 
