@@ -10,16 +10,26 @@
   expressionLanguage="http://www.w3.org/1999/XPath"
   targetNamespace="http://www.flowable.org/processdef">
 
-  <process id="holidayRequest" name="Holiday Request" isExecutable="true">
+  <process id="holidayRequests" name="Holiday Request" isExecutable="true">
 
-    <startEvent id="startEvent"/>
+    <startEvent id="startEvent" flowable:formKey="hform"/>
     <sequenceFlow sourceRef="startEvent" targetRef="approveTask"/>
 
-    <userTask id="approveTask" name="Approve or reject request"/>
+    <!--<userTask id="approveTask" name="Approve or reject request" flowable:assignee="${userService.findManagerForEmployee(employee)}">-->
+
+    <userTask id="approveTask" name="Approve or reject request" flowable:candidateUsers="${userService.findAllSales()}">
+
+      <!--<extensionElements>-->
+        <!--<flowable:taskListener event="create" class="org.flowable.MyAssignmentHandler" />-->
+      <!--</extensionElements>-->
+
+
+    </userTask>
     <sequenceFlow sourceRef="approveTask" targetRef="decision"/>
 
     <exclusiveGateway id="decision"/>
-    <sequenceFlow sourceRef="decision" targetRef="externalSystemCall">
+    <sequenceFlow sourceRef="decision" targetRef="
+">
       <conditionExpression xsi:type="tFormalExpression">
         <![CDATA[
           ${approved}
@@ -35,14 +45,14 @@
     </sequenceFlow>
 
     <serviceTask id="externalSystemCall" name="Enter holidays in external system"
-        flowable:class="top.gongtao.flowable.CallExternalSystemDelegate"/>
+        flowable:class="top.gongtao.flowablespringbootdemo.CallExternalSystemDelegate"/>
     <sequenceFlow sourceRef="externalSystemCall" targetRef="holidayApprovedTask"/>
 
-    <userTask id="holidayApprovedTask" name="Holiday approved"/>
+    <userTask id="holidayApprovedTask" name="Holiday approved" flowable:assignee="${employee}" />
     <sequenceFlow sourceRef="holidayApprovedTask" targetRef="approveEnd"/>
 
     <serviceTask id="sendRejectionMail" name="Send out rejection email"
-        flowable:class="top.gongtao.flowable.SendRejectionMail"/>
+        flowable:class="org.flowable.SendRejectionMail"/>
     <sequenceFlow sourceRef="sendRejectionMail" targetRef="rejectEnd"/>
 
     <endEvent id="approveEnd"/>
