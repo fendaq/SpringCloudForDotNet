@@ -104,4 +104,11 @@ public class DemoApplicationTests {
 
 	}
 
+	@Test
+	public void testLeaveProcess(){
+		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey("holidayRequests").latestVersion().singleResult();
+
+
+	}
+
 }
