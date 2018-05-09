@@ -26,6 +26,7 @@
         <module>socket-service</module>
         <module>antd-service</module>
         <module>flowable-service</module>
+        <module>auth-service</module>
     </modules>
 
     <parent>
